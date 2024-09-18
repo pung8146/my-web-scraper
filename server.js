@@ -8,6 +8,7 @@ app.use(express.json());
 
 // POST 요청으로 스크래핑 작업 처리
 app.post("/api/scrape", async (req, res) => {
+  console.log("서버로 요청 도착:", req.body); // 요청이 도착했을 때 로그 출력
   const { searchTerm } = req.body; // 클라이언트가 보낸 검색어 추출
 
   try {

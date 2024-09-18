@@ -7,13 +7,24 @@ const ScraperUI = () => {
   const [results, setResults] = useState([]);
 
   const handleSearch = async () => {
-    const response = await fetch("/api/scrape", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ searchTerm }),
-    });
-    const data = await response.json();
-    setResults(data);
+    try {
+      const response = await fetch("http://localhost:5000/api/scrape", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchTerm }),
+      });
+
+      // 응답 상태 코드 확인
+      if (!response.ok) {
+        throw new Error("서버 응답에 문제가 있습니다.");
+      }
+
+      // JSON 형식으로 응답을 파싱
+      const data = await response.json();
+      setResults(data); // 결과를 상태로 저장
+    } catch (error) {
+      console.error("API 호출 중 에러 발생:", error);
+    }
   };
 
   return (
