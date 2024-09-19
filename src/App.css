@@ -1,42 +1,53 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* src/App.css */
+
+/* 전체 레이아웃 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수평 중앙 정렬 */
+  justify-content: center; /* 수직 중앙 정렬 */
+  width: 100%; /* 전체 너비 사용 */
+  min-height: 100vh; /* 최소 높이를 전체 화면으로 설정 */
+  padding: 20px; /* 여백 설정 */
+  background-color: #f4f4f9; /* 배경색 설정 */
+  box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
+  font-family: Arial, sans-serif;
+}
+
+/* 헤더 스타일 */
+.app-header {
+  width: 100%; /* 전체 너비 사용 */
+  max-width: 1200px; /* 최대 너비 설정 (너무 넓어지지 않도록) */
+  padding: 20px;
+  background-color: #007bff;
+  color: white;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* 메인 컨테이너 스타일 */
+.app-main {
+  flex: 1;
+  width: 100%; /* 전체 너비 사용 */
+  max-width: 800px; /* 최대 너비 제한 */
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 푸터 스타일 */
+.app-footer {
+  width: 100%; /* 전체 너비 사용 */
+  max-width: 1200px; /* 최대 너비 설정 */
+  background-color: #343a40;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.875rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+/* 푸터 텍스트 스타일 */
+.app-footer p {
+  margin: 0;
 }

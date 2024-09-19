@@ -1,27 +1,31 @@
-// src/components/ScraperUI.jsx
 import { useState } from "react";
-import "./ScraperUi.css"; // 별도의 CSS 파일을 사용해 스타일링
+import "./ScraperUi.css";
 
 const ScraperUI = () => {
+  const [urls, setUrls] = useState(""); // URL 리스트 상태 추가
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
 
   const handleSearch = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/scrape", {
+      // 사용자가 입력한 URL 리스트를 배열로 변환
+      const urlArray = urls
+        .split("\n")
+        .map((url) => url.trim())
+        .filter(Boolean);
+
+      const response = await fetch("/api/scrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchTerm }),
+        body: JSON.stringify({ urls: urlArray, searchTerm }), // URL 배열과 검색어를 서버로 전송
       });
 
-      // 응답 상태 코드 확인
       if (!response.ok) {
         throw new Error("서버 응답에 문제가 있습니다.");
       }
 
-      // JSON 형식으로 응답을 파싱
       const data = await response.json();
-      setResults(data); // 결과를 상태로 저장
+      setResults(data);
     } catch (error) {
       console.error("API 호출 중 에러 발생:", error);
     }
@@ -31,6 +35,14 @@ const ScraperUI = () => {
     <div className="scraper-container">
       <h1>웹 스크래핑 검색</h1>
       <div className="input-container">
+        {/* URL 리스트 입력 필드 */}
+        <textarea
+          rows="5"
+          value={urls}
+          onChange={(e) => setUrls(e.target.value)}
+          placeholder="스크래핑할 URL을 줄 단위로 입력하세요 (예: https://example.com\nhttps://example.com/page)"
+        />
+        {/* 검색어 입력 필드 */}
         <input
           type="text"
           value={searchTerm}
