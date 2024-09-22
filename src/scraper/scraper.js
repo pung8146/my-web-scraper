@@ -5,16 +5,19 @@ import * as cheerio from "cheerio";
 export async function scrapeComments(urls, searchTerm) {
   const comments = [];
 
+  // urls가 배열인지 확인하고, 배열이 아닌 경우 배열로 변환
+  if (!Array.isArray(urls)) {
+    throw new Error("urls는 배열이어야 합니다."); // urls가 배열이 아닌 경우 오류 발생
+  }
+
   // 각 URL에 대해 스크래핑 수행
   for (const url of urls) {
     try {
       const { data } = await axios.get(url);
       const $ = cheerio.load(data);
 
-      // 각 URL에서 댓글을 수집
-      $(".comment_li_").each((index, element) => {
+      $(".comment").each((index, element) => {
         const comment = $(element).text();
-
         if (comment.includes(searchTerm)) {
           comments.push(comment);
         }
