@@ -5,14 +5,21 @@ const ScraperUI = () => {
   const [urlInput, setUrlInput] = useState(""); // 여러 URL을 입력할 수 있도록 문자열 상태로 저장
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
+  const [error, setError] = useState(""); // 에러 상태 추가
 
   const handleSearch = async () => {
+    setError(""); // 에러 상태 초기화
     try {
       // urlInput을 줄바꿈으로 구분된 문자열에서 배열로 변환
       const urls = urlInput
         .split("\n")
         .map((url) => url.trim())
         .filter(Boolean);
+
+      if (urls.length === 0) {
+        setError("URL을 하나 이상 입력해 주세요.");
+        return;
+      }
 
       console.log("클라이언트에서 서버로 전송:", { urls, searchTerm });
 
@@ -29,6 +36,7 @@ const ScraperUI = () => {
       const data = await response.json();
       setResults(data);
     } catch (error) {
+      setError(`API 호출 중 에러 발생: ${error.message}`);
       console.error("API 호출 중 에러 발생:", error);
     }
   };
@@ -53,13 +61,15 @@ const ScraperUI = () => {
         />
         <button onClick={handleSearch}>검색</button>
       </div>
+      {error && <div className="error-message">{error}</div>}{" "}
+      {/* 에러 메시지 출력 */}
       <div className="results-container">
         {results.length === 0 ? (
           <p>검색 결과가 없습니다.</p>
         ) : (
           <ul>
             {results.map((result, index) => (
-              <li key={index}>{result}</li>
+              <li key={index}>{JSON.stringify(result)}</li> // 결과를 JSON 형식으로 출력
             ))}
           </ul>
         )}
