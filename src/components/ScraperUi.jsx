@@ -1,6 +1,7 @@
 // src/components/ScraperUi.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import "./ScraperUI.css";
 
 function ScraperUi() {
   const [url, setUrl] = useState("");
@@ -29,17 +30,18 @@ function ScraperUi() {
   };
 
   return (
-    <div>
-      <div>
+    <div className="scraper-container">
+      <h1 className="title">웹 스크래핑 도구</h1>
+      <div className="input-container">
         <input
           type="text"
-          placeholder="URL 입력"
+          placeholder="URL을 입력하세요"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
         <input
           type="text"
-          placeholder="검색할 텍스트 입력"
+          placeholder="검색할 텍스트를 입력하세요"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -47,8 +49,8 @@ function ScraperUi() {
       <button onClick={handleScrape} disabled={loading}>
         {loading ? "스크래핑 중..." : "데이터 가져오기"}
       </button>
-      <div>
-        <h2>스크래핑 결과:</h2>
+      <div className="results-container">
+        <h2>스크래핑 결과</h2>
         {data.length > 0 ? (
           <ul>
             {data.map((item, index) => (
@@ -56,7 +58,7 @@ function ScraperUi() {
             ))}
           </ul>
         ) : (
-          <p>데이터가 없습니다.</p>
+          <p className="no-data">데이터가 없습니다.</p>
         )}
       </div>
     </div>
